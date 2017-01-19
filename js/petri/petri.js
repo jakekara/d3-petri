@@ -57,12 +57,28 @@ PETRI.dish.prototype.make_links = function(field){
     
 }
 
+PETRI.dish.prototype.prep_canvas = function(){
+    this.pixelRatio = window.devicePixelRatio || 1;
+    this.__context
+	.setTransform(this.pixelRatio,0,0,this.pixelRatio,0,0);
+    
+    this.width(this.width() * this.pixelRatio);
+    this.height(this.height() * this.pixelRatio);
+    this.__canvas
+	.style("height",this.height())
+	.style("width", this.width());
+    
+    console.log("pixelRatio", this.pixelRatio);
+    console.log("prepping canvas");
+}
+
 PETRI.dish.prototype.selection = function(d){
     if (typeof(d) == "undefined") return this.__selection; 
     this.__selection = d;
     this.__canvas = this.__selection.append("canvas")
 	.classed("petri", true)
     this.__context = this.__canvas.node().getContext("2d");
+    this.prep_canvas()
     return this;
 }
 
