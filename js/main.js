@@ -15,6 +15,7 @@
 	    .selection(d3.select("#viz"))
 	    .width(window.innerWidth)
 	    .height(window.innerHeight)
+	    .retina()
 	    .tick(function(a){
 		var that = this;
 		this.simulation().alpha(0.1);

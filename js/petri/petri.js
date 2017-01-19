@@ -57,21 +57,17 @@ PETRI.dish.prototype.make_links = function(field){
     
 }
 
-PETRI.dish.prototype.prep_canvas = function(){
-    this.pixelRatio = window.devicePixelRatio || 1;
-    this.__context
-	.scale(devicePixelRatio, devicePixelRatio);
+PETRI.dish.prototype.retina = function(){
     
-    // .setTransform(this.pixelRatio,0,0,this.pixelRatio,0,0);
-    
-    this.width(this.width() * this.pixelRatio);
-    this.height(this.height() * this.pixelRatio);
+    this.__pixel_ratio = window.devicePixelRatio || 1;
+
     this.__canvas
-	.style("height",this.height())
-	.style("width", this.width());
+        .attr("height",this.height() * this.__pixel_ratio)
+    	.attr("width", this.width() * this.__pixel_ratio)
+    this.__context
+    	.scale(this.__pixel_ratio, this.__pixel_ratio)
     
-    console.log("pixelRatio", this.pixelRatio);
-    console.log("prepping canvas");
+    return this;
 }
 
 PETRI.dish.prototype.selection = function(d){
@@ -80,7 +76,6 @@ PETRI.dish.prototype.selection = function(d){
     this.__canvas = this.__selection.append("canvas")
 	.classed("petri", true)
     this.__context = this.__canvas.node().getContext("2d");
-    this.prep_canvas()
     return this;
 }
 
@@ -92,12 +87,14 @@ PETRI.dish.prototype.geom = function(){
 PETRI.dish.prototype.height = function(d){
     if (typeof(d) == "undefined") return this.geom().height;
     this.__canvas.attr("height", d);
+    this.__canvas.style("height",d+"px");
     return this;
 }
 
 PETRI.dish.prototype.width = function(d){
     if (typeof(d) == "undefined") return this.geom().width;
     this.__canvas.attr("width",d);
+    this.__canvas.style("width",d + "px");
     return this;
 }
 
@@ -146,7 +143,7 @@ PETRI.dish.prototype.simulation = function(){
 		   if (n.hasOwnProperty("__destination")){
 		       return n.__desintation[0];
 		   }
-		   return d.width() / 2
+		   return d.width() / 2;
 	       })
 	       .strength(.5))
 	.force("y",
@@ -154,7 +151,7 @@ PETRI.dish.prototype.simulation = function(){
 		       if (n.hasOwnProperty("__destination")){
 			   return n.__desintation[0];
 		       }
-		       return d.height() / 2;
+		   return d.height() / 2;
 		   })
 	       .strength(.5))
     	.force(
