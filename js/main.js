@@ -13,8 +13,8 @@
 	    .min_radius(4)
 	    .radius_field("amount")
 	    .selection(d3.select("#viz"))
-	    .width("1000")
-	    .height("500")
+	    .width(window.innerWidth)
+	    .height(window.innerHeight)
 	    .tick(function(a){
 		var that = this;
 		this.simulation().alpha(0.1);
