@@ -29,8 +29,9 @@
 	    d.unlock();
 	    d.group_by("group")},
 		     function(){d.grid_formation()},
-		     function(){d.scramble_formation();
-		     	       }
+		     function(){
+			 d.scramble_formation();
+		     }
 		    ];
 	var i = 0;
 
