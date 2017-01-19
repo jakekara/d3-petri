@@ -4,33 +4,47 @@
 (function(){
 
     var go = function(data){
-	console.log("main.js");
 
-	d = new PETRI.dish();
+	// Create a new petri dish and do all the main setup here
+	var d = new PETRI.dish();
 	d
 	    .data(data)
 	    .max_radius(14)
 	    .min_radius(4)
 	    .radius_field("amount")
+	    .set_fill(function(d){
+		return ["gold","palegreen","lightskyblue","tomato"]
+		[d.group % 4];
+	    })
 	    .selection(d3.select("#viz"))
 	    .width(window.innerWidth)
 	    .height(window.innerHeight)
-	    .retina()
-	    .tick(function(a){
-		var that = this;
-		this.simulation().alpha(0.1);
-		that.__context.clearRect(0, 0, d.width(), d.height());
-		that.__context.strokeStyle = "black"
-		that.__context.lineWidth = 1;
+	    // .group_by("group")
+	    .responsive()
+	    .simulation();
 
-		this.simulation().nodes().forEach(function(n){
-		    that.draw_node.call(that,n);
-		});
 
-	    })
-	    .group_by("group");
+	// Show off some features
+	var funcs = [function(){
+	    d.unlock();
+	    d.group_by("group")},
+		     function(){d.grid_formation()},
+		     function(){d.scramble_formation();
+		     	       }
+		    ];
+	var i = 0;
+
+	setInterval(function(){
+	    if (i > funcs.length - 1) i = 0;
+	    funcs[i]();
+	    i++;
+	},5000);
+
+	
+	return d;
     }
 
+    // Make fake data
     var dt = [];
     for (var i = 0; i < 250; i++){
 	dt.push({
@@ -40,9 +54,8 @@
 	});
     }
 
-    // Make fake data
     // With a real viz, I'd call d3.json(url, go);
-    go(dt.sort(function(a,b){if (a.amount < b.amount) return -1; return 1;}));
+    EXAMPLE = go(dt.sort(function(a,b){if (a.amount < b.amount) return -1; return 1;}));
 })();
 
 
