@@ -2,7 +2,7 @@
 
 jake@jakekara.com
 
-demo: jakekara.github.io/d3-petri/
+demo: [jakekara.github.io/d3-petri/](jakekara.github.io/d3-petri/)
 
 A petri-dish-looking data viz.
 
