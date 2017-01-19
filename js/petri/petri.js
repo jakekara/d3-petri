@@ -60,7 +60,9 @@ PETRI.dish.prototype.make_links = function(field){
 PETRI.dish.prototype.prep_canvas = function(){
     this.pixelRatio = window.devicePixelRatio || 1;
     this.__context
-	.setTransform(this.pixelRatio,0,0,this.pixelRatio,0,0);
+	.scale(devicePixelRatio, devicePixelRatio);
+    
+    // .setTransform(this.pixelRatio,0,0,this.pixelRatio,0,0);
     
     this.width(this.width() * this.pixelRatio);
     this.height(this.height() * this.pixelRatio);
