@@ -295,7 +295,8 @@ PETRI.dish.prototype.grid_formation = function(){
 	if (col == 0){
 	    row ++;
 	}
-	var ret = [Math.round(col * node_width), Math.round(row * node_height)];
+	var ret = [Math.round(col * node_width) + that.radius(n) + 2,
+		   Math.round(row * node_height) + that.radius(n) + 2];
 	col++;
 	return ret;
 	
