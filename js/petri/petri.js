@@ -87,8 +87,9 @@ PETRI.dish.prototype.retina = function(){
 }
 
 PETRI.dish.prototype.selection = function(d){
-    if (typeof(d) == "undefined") return this.__selection; 
+    if (typeof(d) == "undefined") return this.__selection;
     this.__selection = d;
+    this.__selection.html("");
     this.__canvas = this.__selection
 	.append("canvas")
 	.classed("petri", true)
@@ -187,6 +188,8 @@ PETRI.dish.prototype.update_forces = function(){
     if (typeof(this.__simulation) == "undefined") return this;
 
     var that = this;
+    var x_strength = 0.5;
+    var y_strength = x_strength * this.width() / this.height() 
     this.simulation()
             .force("x",
 	       d3.forceX(function(n) {
@@ -196,7 +199,7 @@ PETRI.dish.prototype.update_forces = function(){
 		   }
 		   return that.width() / 2;
 	       })
-	       .strength(0.5))
+	       .strength(x_strength))
 	.force("y",
 	       d3.forceY(function(n) {
 		   if (n.hasOwnProperty("__destination")
@@ -205,7 +208,7 @@ PETRI.dish.prototype.update_forces = function(){
 		   }
 		   return that.height() / 2;
 	       })
-	       .strength(0.5))
+	       .strength(y_strength))
 
 
     return this;
@@ -299,10 +302,7 @@ PETRI.dish.prototype.grid_formation = function(){
 		   Math.round(row * node_height) + that.radius(n) + 2];
 	col++;
 	return ret;
-	
     });
-	
-    
 }
 
 PETRI.dish.prototype.scramble_formation = function(){

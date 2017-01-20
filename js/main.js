@@ -4,7 +4,6 @@
 (function(){
 
     var go = function(data){
-
 	// Create a new petri dish and do all the main setup here
 	var d = new PETRI.dish();
 	d
@@ -27,7 +26,8 @@
 	// Show off some features
 	var funcs = [function(){
 	    d.unlock();
-	    d.group_by("group")},
+	    d.group_by("group")
+	},
 		     function(){d.grid_formation()},
 		     function(){
 			 d.scramble_formation();
